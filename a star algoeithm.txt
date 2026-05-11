@@ -13,7 +13,7 @@ graph = {
     'F': [('G', 2)],
     'G': []
 }
-
+adjacency list we have used
 # Heuristic values (estimated distance to goal)
 heuristic = {
     'A': 7,

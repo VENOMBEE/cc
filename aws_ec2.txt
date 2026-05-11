@@ -1,0 +1,14 @@
+pwd
+ls
+mkdir demo
+cd demo
+touch test.txt
+
+sudo apt update
+sudo apt install git -y
+
+git clone https://github.com/TheAlgorithms/Python.git
+
+cd Python
+
+python3 maths/fibonacci.py

@@ -1,0 +1,564 @@
+GRAPH USED IN DFS AND BFS
+
+graph = {
+    0: [1, 2],
+    1: [0, 3, 4],
+    2: [0, 5],
+    3: [1],
+    4: [1, 5],
+    5: [2, 4]
+}
+
+---------------------------------------------------
+DFS (Depth First Search)
+---------------------------------------------------
+
+CODE:
+
+def dfs_recursive(graph, node, visited):
+
+    visited.add(node)
+
+    print(node, end=" ")
+
+    for neighbor in graph[node]:
+
+        if neighbor not in visited:
+
+            dfs_recursive(graph, neighbor, visited)
+
+
+def dfs_full(graph):
+
+    visited = set()
+
+    # In case graph is disconnected
+    for node in graph:
+
+        if node not in visited:
+
+            dfs_recursive(graph, node, visited)
+
+
+dfs_full(graph)
+
+---------------------------------------------------
+LINE BY LINE EXPLANATION
+---------------------------------------------------
+
+1. def dfs_recursive(graph, node, visited):
+
+- Defines DFS recursive function.
+- graph = graph structure
+- node = current node
+- visited = stores visited nodes
+
+---------------------------------------------------
+
+2. visited.add(node)
+
+- Adds current node into visited set.
+- Prevents revisiting same node.
+
+Example:
+If node = 0
+
+visited = {0}
+
+---------------------------------------------------
+
+3. print(node, end=" ")
+
+- Prints current node.
+
+Example Output:
+0 1 3 ...
+
+---------------------------------------------------
+
+4. for neighbor in graph[node]:
+
+- Traverses all neighbors of current node.
+
+Example:
+If node = 1
+
+graph[1] = [0, 3, 4]
+
+Neighbors:
+0
+3
+4
+
+---------------------------------------------------
+
+5. if neighbor not in visited:
+
+- Checks whether neighbor is already visited.
+
+---------------------------------------------------
+
+6. dfs_recursive(graph, neighbor, visited)
+
+- Recursively visits neighbor node.
+
+---------------------------------------------------
+
+7. def dfs_full(graph):
+
+- Function to handle disconnected graph.
+
+---------------------------------------------------
+
+8. visited = set()
+
+- Creates empty visited set.
+
+---------------------------------------------------
+
+9. for node in graph:
+
+- Traverses every node in graph.
+
+---------------------------------------------------
+
+10. if node not in visited:
+
+- Checks whether node is unvisited.
+
+---------------------------------------------------
+
+11. dfs_recursive(graph, node, visited)
+
+- Starts DFS traversal.
+
+---------------------------------------------------
+
+12. dfs_full(graph)
+
+- Function call to start DFS.
+
+---------------------------------------------------
+DFS DRY RUN
+---------------------------------------------------
+
+Start:
+visited = {}
+
+---------------------------------------------------
+
+Node 0 visited
+
+Output:
+0
+
+visited = {0}
+
+Neighbors:
+1, 2
+
+---------------------------------------------------
+
+Go to 1
+
+Output:
+0 1
+
+visited = {0,1}
+
+Neighbors:
+0,3,4
+
+0 already visited
+
+---------------------------------------------------
+
+Go to 3
+
+Output:
+0 1 3
+
+visited = {0,1,3}
+
+3 has only neighbor 1
+Already visited
+
+Backtrack to 1
+
+---------------------------------------------------
+
+Go to 4
+
+Output:
+0 1 3 4
+
+visited = {0,1,3,4}
+
+Neighbors:
+1,5
+
+1 already visited
+
+---------------------------------------------------
+
+Go to 5
+
+Output:
+0 1 3 4 5
+
+visited = {0,1,3,4,5}
+
+Neighbors:
+2,4
+
+4 already visited
+
+---------------------------------------------------
+
+Go to 2
+
+Output:
+0 1 3 4 5 2
+
+visited = {0,1,2,3,4,5}
+
+Neighbors:
+0,5
+
+Both already visited
+
+DFS completed.
+
+---------------------------------------------------
+
+FINAL DFS OUTPUT
+
+0 1 3 4 5 2
+
+---------------------------------------------------
+
+SHORT ORAL DEFINITION OF DFS
+
+"DFS stands for Depth First Search. It explores one branch completely before moving to another branch. It uses recursion or stack data structure."
+
+---------------------------------------------------
+BFS (Breadth First Search)
+---------------------------------------------------
+
+CODE:
+
+from collections import deque
+
+def bfs(graph, start):
+
+    visited = set()
+
+    queue = deque([start])
+
+    visited.add(start)
+
+    while queue:
+
+        node = queue.popleft()
+
+        print(node, end=" ")
+
+        for neighbor in graph[node]:
+
+            if neighbor not in visited:
+
+                visited.add(neighbor)
+
+                queue.append(neighbor)
+
+
+bfs(graph, 0)
+
+---------------------------------------------------
+LINE BY LINE EXPLANATION
+---------------------------------------------------
+
+1. from collections import deque
+
+- Imports deque from collections module.
+- deque is used as queue in BFS.
+
+---------------------------------------------------
+
+2. def bfs(graph, start):
+
+- Defines BFS function.
+- graph = graph structure
+- start = starting node
+
+---------------------------------------------------
+
+3. visited = set()
+
+- Creates empty visited set.
+
+---------------------------------------------------
+
+4. queue = deque([start])
+
+- Creates queue and inserts start node.
+
+Example:
+queue = [0]
+
+---------------------------------------------------
+
+5. visited.add(start)
+
+- Marks start node as visited.
+
+---------------------------------------------------
+
+6. while queue:
+
+- Loop runs until queue becomes empty.
+
+---------------------------------------------------
+
+7. node = queue.popleft()
+
+- Removes first element from queue.
+
+FIFO:
+First In First Out
+
+---------------------------------------------------
+
+8. print(node, end=" ")
+
+- Prints current node.
+
+---------------------------------------------------
+
+9. for neighbor in graph[node]:
+
+- Traverses all neighbors of current node.
+
+---------------------------------------------------
+
+10. if neighbor not in visited:
+
+- Checks whether neighbor is unvisited.
+
+---------------------------------------------------
+
+11. visited.add(neighbor)
+
+- Marks neighbor as visited.
+
+---------------------------------------------------
+
+12. queue.append(neighbor)
+
+- Adds neighbor into queue.
+
+---------------------------------------------------
+
+13. bfs(graph, 0)
+
+- Starts BFS traversal from node 0.
+
+---------------------------------------------------
+BFS DRY RUN
+---------------------------------------------------
+
+Initial:
+
+queue = [0]
+visited = {0}
+
+---------------------------------------------------
+
+Remove 0
+
+Output:
+0
+
+Neighbors:
+1,2
+
+queue = [1,2]
+visited = {0,1,2}
+
+---------------------------------------------------
+
+Remove 1
+
+Output:
+0 1
+
+Neighbors:
+0,3,4
+
+0 already visited
+
+queue = [2,3,4]
+visited = {0,1,2,3,4}
+
+---------------------------------------------------
+
+Remove 2
+
+Output:
+0 1 2
+
+Neighbors:
+0,5
+
+0 already visited
+
+queue = [3,4,5]
+visited = {0,1,2,3,4,5}
+
+---------------------------------------------------
+
+Remove 3
+
+Output:
+0 1 2 3
+
+Neighbor:
+1 already visited
+
+queue = [4,5]
+
+---------------------------------------------------
+
+Remove 4
+
+Output:
+0 1 2 3 4
+
+Neighbors:
+1,5
+
+Already visited
+
+queue = [5]
+
+---------------------------------------------------
+
+Remove 5
+
+Output:
+0 1 2 3 4 5
+
+Neighbors:
+2,4
+
+Already visited
+
+queue = []
+
+BFS completed.
+
+---------------------------------------------------
+
+FINAL BFS OUTPUT
+
+0 1 2 3 4 5
+
+---------------------------------------------------
+
+SHORT ORAL DEFINITION OF BFS
+
+"BFS stands for Breadth First Search. It explores nodes level by level using queue data structure."
+
+---------------------------------------------------
+DIFFERENCE BETWEEN DFS AND BFS
+---------------------------------------------------
+
+DFS:
+- Uses Stack or Recursion
+- Goes deep first
+- Less memory
+- Output:
+0 1 3 4 5 2
+
+BFS:
+- Uses Queue
+- Traverses level by level
+- More memory
+- Output:
+0 1 2 3 4 5
+
+---------------------------------------------------
+
+TIME COMPLEXITY
+
+DFS:
+O(V + E)
+
+BFS:
+O(V + E)
+
+Where:
+V = Vertices
+E = Edges
+
+---------------------------------------------------
+
+SPACE COMPLEXITY
+
+DFS:
+O(V)
+
+BFS:
+O(V)
+
+---------------------------------------------------
+SHORT ORAL QUESTIONS & ANSWERS
+---------------------------------------------------
+
+1. What is DFS?
+- DFS is a graph traversal algorithm that explores depth first.
+
+---------------------------------------------------
+
+2. What data structure is used in DFS?
+- Stack or Recursion.
+
+---------------------------------------------------
+
+3. What is BFS?
+- BFS is graph traversal algorithm that explores level by level.
+
+---------------------------------------------------
+
+4. What data structure is used in BFS?
+- Queue.
+
+---------------------------------------------------
+
+5. Which traversal gives shortest path in unweighted graph?
+- BFS.
+
+---------------------------------------------------
+
+6. Why BFS gives shortest path?
+- Because BFS explores level by level.
+
+---------------------------------------------------
+
+7. Which is faster DFS or BFS?
+- Depends on graph structure and problem.
+
+---------------------------------------------------
+
+8. Can DFS handle disconnected graph?
+- Yes, using outer loop like dfs_full().
+
+---------------------------------------------------
+
+9. Why visited set is used?
+- To avoid revisiting nodes and infinite loop.
+
+---------------------------------------------------
+
+10. What is recursion in DFS?
+- Function calling itself repeatedly.

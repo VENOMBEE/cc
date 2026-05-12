@@ -1,0 +1,416 @@
+# ============================================================
+# LINE BY LINE ORAL EXPLANATION OF CHATBOT CODE
+# ============================================================
+
+
+---------------------------------------------------
+1. import re, random
+---------------------------------------------------
+
+Explanation:
+This line imports two Python modules.
+
+1. re
+- re stands for Regular Expression.
+- It is used for pattern matching.
+- Helps chatbot identify words like:
+  hello, bye, hostel, fees, etc.
+
+2. random
+- Used to select random responses from a list.
+- Makes chatbot replies look natural.
+
+
+---------------------------------------------------
+2. KB = [
+---------------------------------------------------
+
+Explanation:
+KB means Knowledge Base.
+
+It stores:
+- patterns (keywords/questions)
+- responses
+
+The chatbot searches this knowledge base to find
+the correct answer.
+
+
+---------------------------------------------------
+3. (r"\bhello\b|\bhi\b|\bhey\b", [
+---------------------------------------------------
+
+Explanation:
+This is a regex pattern.
+
+\b
+- means word boundary.
+
+|
+- means OR.
+
+So this pattern matches:
+- hello
+- hi
+- hey
+
+If user types any of these words,
+this rule becomes TRUE.
+
+
+---------------------------------------------------
+4. [
+    "Hello! Welcome to PCCOER Helpdesk...",
+    "Hi! I'm PCBOT..."
+]
+---------------------------------------------------
+
+Explanation:
+These are possible responses for greeting messages.
+
+random.choice() selects one response randomly.
+
+
+---------------------------------------------------
+5. Other KB Rules
+---------------------------------------------------
+
+Example:
+
+(r"\bhostel\b|\baccommodation\b|\broom\b", [...])
+
+Explanation:
+If user types:
+- hostel
+- accommodation
+- room
+
+then chatbot gives hostel-related response.
+
+Same logic is used for:
+- admission
+- fees
+- exams
+- placement
+- wifi
+- transport
+- scholarship
+
+
+---------------------------------------------------
+6. DEFAULT = [
+---------------------------------------------------
+
+Explanation:
+These are default responses.
+
+If chatbot cannot understand user input,
+it gives one of these replies.
+
+Example:
+User: What is weather today?
+
+No matching pattern exists.
+
+So chatbot says:
+"I'm sorry, I didn't understand that."
+
+
+---------------------------------------------------
+7. def respond(user_input):
+---------------------------------------------------
+
+Explanation:
+This creates a function named respond().
+
+Purpose:
+Generate chatbot reply based on user input.
+
+
+---------------------------------------------------
+8. text = user_input.lower().strip()
+---------------------------------------------------
+
+Explanation:
+
+lower()
+- converts text into lowercase.
+
+Example:
+"HELLO" → "hello"
+
+strip()
+- removes extra spaces.
+
+Example:
+" hello " → "hello"
+
+Purpose:
+Makes matching easier.
+
+
+---------------------------------------------------
+9. for pattern, replies in KB:
+---------------------------------------------------
+
+Explanation:
+This loop checks every rule inside the knowledge base.
+
+pattern
+- stores regex pattern.
+
+replies
+- stores response list.
+
+
+---------------------------------------------------
+10. if re.search(pattern, text):
+---------------------------------------------------
+
+Explanation:
+re.search() checks whether user input matches
+the regex pattern.
+
+Example:
+Input:
+"hi"
+
+Pattern:
+hello|hi|hey
+
+Match found → TRUE
+
+
+---------------------------------------------------
+11. return random.choice(replies)
+---------------------------------------------------
+
+Explanation:
+Selects one random reply from the response list.
+
+Purpose:
+Avoids repetitive replies.
+
+
+---------------------------------------------------
+12. return random.choice(DEFAULT)
+---------------------------------------------------
+
+Explanation:
+If no pattern matches,
+chatbot returns a default response.
+
+
+---------------------------------------------------
+13. def is_exit(text):
+---------------------------------------------------
+
+Explanation:
+This function checks whether user wants
+to exit the chatbot.
+
+
+---------------------------------------------------
+14. return bool(re.search(...))
+---------------------------------------------------
+
+Explanation:
+Checks if user typed:
+- bye
+- goodbye
+- exit
+- quit
+
+If match found:
+returns True
+
+Otherwise:
+returns False
+
+
+---------------------------------------------------
+15. if __name__ == "__main__":
+---------------------------------------------------
+
+Explanation:
+This ensures the program runs only when
+the file is executed directly.
+
+
+---------------------------------------------------
+16. print("╔" + "═"*52 + "╗")
+---------------------------------------------------
+
+Explanation:
+Prints decorative top border for chatbot UI.
+
+"═"*52
+means:
+repeat the symbol 52 times.
+
+
+---------------------------------------------------
+17. print("PCBOT: Hello! I'm PCBOT...")
+---------------------------------------------------
+
+Explanation:
+Displays welcome message to the user.
+
+
+---------------------------------------------------
+18. while True:
+---------------------------------------------------
+
+Explanation:
+Creates an infinite loop.
+
+The chatbot keeps running continuously
+until user exits.
+
+
+---------------------------------------------------
+19. try:
+---------------------------------------------------
+
+Explanation:
+Used for exception handling.
+
+Prevents program from crashing due to errors.
+
+
+---------------------------------------------------
+20. user = input("You  : ").strip()
+---------------------------------------------------
+
+Explanation:
+Takes input from the user.
+
+strip()
+removes extra spaces.
+
+
+---------------------------------------------------
+21. if not user:
+    continue
+---------------------------------------------------
+
+Explanation:
+Checks whether user entered empty input.
+
+If user presses ENTER without typing anything,
+continue skips current iteration and restarts loop.
+
+
+---------------------------------------------------
+22. reply = respond(user)
+---------------------------------------------------
+
+Explanation:
+Calls respond() function to generate chatbot reply.
+
+
+---------------------------------------------------
+23. print(f"PCBOT: {reply}")
+---------------------------------------------------
+
+Explanation:
+Displays chatbot response on the screen.
+
+f-string allows variable insertion.
+
+
+---------------------------------------------------
+24. if is_exit(user):
+    break
+---------------------------------------------------
+
+Explanation:
+Checks whether user typed:
+- bye
+- exit
+- quit
+
+If TRUE:
+break stops the loop
+and chatbot exits.
+
+
+---------------------------------------------------
+25. except (KeyboardInterrupt, EOFError):
+---------------------------------------------------
+
+Explanation:
+Handles unexpected interruptions safely.
+
+Examples:
+- Ctrl + C
+- EOF error
+
+
+---------------------------------------------------
+26. print("\nPCBOT: Session ended. Goodbye!")
+---------------------------------------------------
+
+Explanation:
+Displays exit message if interruption occurs.
+
+
+---------------------------------------------------
+27. print("Chatbot types: Rule-Based...")
+---------------------------------------------------
+
+Explanation:
+Displays chatbot conclusion and approach used.
+
+This chatbot is:
+- Rule-Based
+- Regex Pattern Matching
+- Knowledge Base + Inference Engine
+
+
+---------------------------------------------------
+COMPLETE FLOW OF CHATBOT
+---------------------------------------------------
+
+User Input
+     ↓
+Convert to lowercase
+     ↓
+Regex Pattern Matching
+     ↓
+Knowledge Base Search
+     ↓
+Random Response Selection
+     ↓
+Display Reply
+     ↓
+Check Exit Condition
+     ↓
+Continue OR Stop
+
+
+---------------------------------------------------
+IMPORTANT CONCEPTS USED
+---------------------------------------------------
+
+1. Regular Expressions
+2. Pattern Matching
+3. Knowledge Base
+4. Inference Engine
+5. Functions
+6. Loops
+7. Conditions
+8. Exception Handling
+9. Random Response Generation
+
+
+---------------------------------------------------
+TYPE OF CHATBOT
+---------------------------------------------------
+
+Rule-Based Chatbot
+
+Because:
+- It follows predefined rules.
+- No machine learning is used.
+- Responses are based on pattern matching.

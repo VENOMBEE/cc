@@ -1,0 +1,448 @@
+=============================
+1. Selection Sort using Greedy Approach
+=============================
+
+Code:
+
+arr = [64, 25, 12, 22, 11]
+
+n = len(arr)
+
+for i in range(n):
+
+    # Assume current index has minimum element
+    min_index = i
+
+    # Find minimum element
+    for j in range(i + 1, n):
+        if arr[j] < arr[min_index]:
+            min_index = j
+
+    # Swap elements
+    arr[i], arr[min_index] = arr[min_index], arr[i]
+
+print("Sorted Array:")
+print(arr)
+
+
+-----------------------------------
+Line-by-Line Explanation
+-----------------------------------
+
+arr = [64, 25, 12, 22, 11]
+
+- We create a list (array) of unsorted numbers.
+
+Initial Array:
+[64, 25, 12, 22, 11]
+
+
+n = len(arr)
+
+- len(arr) gives total number of elements.
+- Here n = 5.
+
+
+for i in range(n):
+
+- Outer loop runs from index 0 to 4.
+- It places one smallest element at correct position in every iteration.
+
+Iterations:
+i = 0 → place smallest element at index 0
+i = 1 → place second smallest element at index 1
+i = 2 → place third smallest element at index 2
+and so on.
+
+
+min_index = i
+
+- Assume current element is the minimum element.
+- Store its index in min_index.
+
+Example:
+If i = 0
+min_index = 0
+Current minimum = 64
+
+
+for j in range(i + 1, n):
+
+- Inner loop checks remaining unsorted elements.
+- Starts from next element.
+
+Example:
+If i = 0
+j runs from 1 to 4
+
+
+if arr[j] < arr[min_index]:
+
+- Compare current element with assumed minimum element.
+
+Example:
+25 < 64 → True
+
+
+min_index = j
+
+- Update minimum index if a smaller element is found.
+
+
+-----------------------------------
+Step-by-Step Working
+-----------------------------------
+
+Initial Array:
+[64, 25, 12, 22, 11]
+
+
+Pass 1 (i = 0)
+
+Compare:
+25 < 64 → minimum = 25
+12 < 25 → minimum = 12
+22 < 12 → No
+11 < 12 → minimum = 11
+
+So:
+min_index = 4
+
+
+arr[i], arr[min_index] = arr[min_index], arr[i]
+
+- Swap smallest element with current element.
+
+Before Swap:
+[64, 25, 12, 22, 11]
+
+After Swap:
+[11, 25, 12, 22, 64]
+
+
+-----------------------------------
+
+Pass 2 (i = 1)
+
+Find minimum in:
+[25, 12, 22, 64]
+
+Minimum = 12
+
+After Swap:
+[11, 12, 25, 22, 64]
+
+
+-----------------------------------
+
+Pass 3 (i = 2)
+
+Find minimum in:
+[25, 22, 64]
+
+Minimum = 22
+
+After Swap:
+[11, 12, 22, 25, 64]
+
+
+-----------------------------------
+
+Pass 4 (i = 3)
+
+Array already sorted.
+
+Final Array:
+[11, 12, 22, 25, 64]
+
+
+print("Sorted Array:")
+print(arr)
+
+- Prints final sorted array.
+
+Output:
+Sorted Array:
+[11, 12, 22, 25, 64]
+
+
+-----------------------------------
+Oral Explanation
+-----------------------------------
+
+“Selection Sort is a greedy sorting algorithm.
+In every iteration, it selects the smallest element from the unsorted part and places it at the correct position.
+It is called greedy because it always chooses the minimum element immediately.”
+
+
+================================================================
+2. Prim’s Algorithm (Minimum Spanning Tree)
+================================================================
+
+Code:
+
+INF = 9999999
+
+# Number of vertices
+V = 5
+
+# Graph represented using adjacency matrix
+graph = [
+    [0, 2, 0, 6, 0],
+    [2, 0, 3, 8, 5],
+    [0, 3, 0, 0, 7],
+    [6, 8, 0, 0, 9],
+    [0, 5, 7, 9, 0]
+]
+
+selected = [False] * V
+
+selected[0] = True
+
+print("Edge : Weight\n")
+
+# MST will have V-1 edges
+for i in range(V - 1):
+
+    minimum = INF
+    x = 0
+    y = 0
+
+    for i in range(V):
+        if selected[i]:
+
+            for j in range(V):
+                if (not selected[j]) and graph[i][j]:
+
+                    if minimum > graph[i][j]:
+                        minimum = graph[i][j]
+                        x = i
+                        y = j
+
+    print(x, "-", y, ":", graph[x][y])
+
+    selected[y] = True
+
+
+-----------------------------------
+Line-by-Line Explanation
+-----------------------------------
+
+INF = 9999999
+
+- Represents infinity (very large value).
+- Used for comparison while finding minimum edge.
+
+
+V = 5
+
+- Total number of vertices = 5
+
+Vertices:
+0, 1, 2, 3, 4
+
+
+graph = [
+    [0, 2, 0, 6, 0],
+    [2, 0, 3, 8, 5],
+    [0, 3, 0, 0, 7],
+    [6, 8, 0, 0, 9],
+    [0, 5, 7, 9, 0]
+]
+
+- Graph represented using adjacency matrix.
+- graph[i][j] represents edge weight between vertices i and j.
+
+Example:
+graph[0][1] = 2
+
+means edge between 0 and 1 has weight 2.
+
+
+Graph Structure:
+
+       2
+0 -------- 1
+| \        | \
+6  \       3  5
+|    \     |    \
+3      \   |      4
+          2---7---4
+
+
+selected = [False] * V
+
+- Creates list to track selected vertices.
+
+Initially:
+[False, False, False, False, False]
+
+
+selected[0] = True
+
+- Start MST from vertex 0.
+
+Now:
+[True, False, False, False, False]
+
+
+print("Edge : Weight\n")
+
+- Prints heading.
+
+
+for i in range(V - 1):
+
+- MST requires V-1 edges.
+- Since V = 5, loop runs 4 times.
+
+
+minimum = INF
+
+- Assume minimum edge weight is infinity initially.
+
+
+x = 0
+y = 0
+
+- Variables used to store selected edge vertices.
+
+
+for i in range(V):
+
+- Traverse all vertices.
+
+
+if selected[i]:
+
+- Only check vertices already included in MST.
+
+
+for j in range(V):
+
+- Check all neighboring vertices.
+
+
+if (not selected[j]) and graph[i][j]:
+
+Condition means:
+1. Vertex j is not selected
+2. Edge exists between i and j
+
+
+if minimum > graph[i][j]:
+
+- Find smallest edge among all possible edges.
+
+
+minimum = graph[i][j]
+x = i
+y = j
+
+- Update minimum edge and store vertices.
+
+
+-----------------------------------
+Step-by-Step Execution
+-----------------------------------
+
+Initial Selected Vertex:
+0
+
+
+-----------------------------------
+
+Iteration 1
+
+Possible Edges:
+0-1 = 2
+0-3 = 6
+
+Minimum Edge:
+0-1 = 2
+
+Print:
+0 - 1 : 2
+
+Add vertex 1 to MST.
+
+Selected Vertices:
+0, 1
+
+
+-----------------------------------
+
+Iteration 2
+
+Possible Edges:
+1-2 = 3
+1-4 = 5
+0-3 = 6
+1-3 = 8
+
+Minimum Edge:
+1-2 = 3
+
+Print:
+1 - 2 : 3
+
+Selected Vertices:
+0, 1, 2
+
+
+-----------------------------------
+
+Iteration 3
+
+Possible Edges:
+1-4 = 5
+0-3 = 6
+2-4 = 7
+1-3 = 8
+
+Minimum Edge:
+1-4 = 5
+
+Print:
+1 - 4 : 5
+
+Selected Vertices:
+0, 1, 2, 4
+
+
+-----------------------------------
+
+Iteration 4
+
+Possible Edges:
+0-3 = 6
+4-3 = 9
+1-3 = 8
+
+Minimum Edge:
+0-3 = 6
+
+Print:
+0 - 3 : 6
+
+
+-----------------------------------
+Final Minimum Spanning Tree
+-----------------------------------
+
+Edges:
+0 - 1 : 2
+1 - 2 : 3
+1 - 4 : 5
+0 - 3 : 6
+
+Total Cost:
+2 + 3 + 5 + 6 = 16
+
+
+-----------------------------------
+Oral Explanation
+-----------------------------------
+
+“Prim’s Algorithm is a greedy algorithm used to find the Minimum Spanning Tree of a weighted graph.
+It starts from one vertex and repeatedly selects the minimum weight edge that connects a selected vertex to an unselected vertex until all vertices are connected.”
